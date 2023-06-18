@@ -17,6 +17,10 @@
 
 Алгоритм находится в файле streamlit_speaker_emotions.py
 
+https://huggingface.co/spaces/kostya85/hw_2_streamlit_speaker_emotions
+
 ## Интерфейс для аннотации
 
 Алгоритм находится в файле streamlit_annotations.py
+
+https://huggingface.co/spaces/kostya85/hw2_streamlit_annotations
