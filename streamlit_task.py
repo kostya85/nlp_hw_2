@@ -29,9 +29,20 @@ def classify_sentiment(text):
     return result["label"]
 
 def get_dialogue_data(movie, character = True):
-    heroes = movies[movie]
-    print(heroes)
-    return [{'Speaker': "Character A", 'Text' : ['test']}]
+    heroes = [d['Id'] for d in movies[movie]]
+    df_heroes_replics = df[(df['mName'] == movie) & (df['char_id1'].isin(heroes))].groupby('char_id1').head(10)
+    result = []
+    for index, row in df_heroes_replics.iterrows():
+        character_id = row['char_id1']
+        replicas = eval(row['replicas'].replace('nan,', '').replace('nan', ''))
+        for i in range(0, len(result)):
+            if(result[i]['Speaker'] == character_id):
+                result[i]['Text'] += replicas
+                break
+        else:
+            result.append({'Speaker': character_id, 'Text': replicas})
+
+    return result
 
 # Интерфейс пользователя на Streamlit
 st.title("Emotion Analysis")
