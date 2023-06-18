@@ -6,6 +6,15 @@
 Данные после предобработки находятся в replicas.csv
 
 ## Sentiment
+### API с Ray Serve лежит тут: ```api_ray_serve/```
+
+### API FastAPI + Ray Serve лежит тут: ```api_fastapi_ray_serve/```
+
+### Визуализация статистики по репликам диалога лежит тут: ```dialog_analysis_client/```
+#### Запуск:
+##### Для начала записываем диалог в виде списка реплик в переменную DIALOG файла main.py
+##### После этого командой ```streamlit run <path_to_main_file>``` запускаем визуализацию
+
 
 ## Genre + Emotions
 
