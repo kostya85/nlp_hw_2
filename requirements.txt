@@ -5,3 +5,8 @@ transformers==4.30.2
 starlette~=0.27.0
 numpy~=1.23.5
 pydantic==1.10.9
+fastapi~=0.97.0
+requests~=2.31.0
+streamlit~=1.23.1
+pandas~=2.0.2
+altair~=5.0.1
