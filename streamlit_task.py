@@ -28,8 +28,8 @@ def classify_sentiment(text):
     result = sentiment_analysis(text)[0]
     return result["label"]
 
-def get_dialogue_data(movie, character = True):
-    heroes = [d['Id'] for d in movies[movie]]
+def get_dialogue_data(movie, character = 'All'):
+    heroes = [d['Id'] for d in movies[movie]] if character == 'All' else [character]
     df_heroes_replics = df[(df['mName'] == movie) & (df['char_id1'].isin(heroes))].groupby('char_id1').head(10)
     result = []
     for index, row in df_heroes_replics.iterrows():
@@ -52,6 +52,8 @@ character_choice = st.selectbox("Choose a character:", [{'Id': 'All', 'Name' : "
 
 if character_choice['Id'] == "All":
     dialogue_data = get_dialogue_data(movie_choice) # Получение диалоговых данных из файла
+else:
+    dialogue_data = get_dialogue_data(movie_choice, character_choice['Id']) # Получение диалоговых данных для выбранного персонажа из файла
     
     sentiment_score = {"POSITIVE":0, "NEGATIVE":0, "NEUTRAL":0}
     
@@ -72,29 +74,3 @@ if character_choice['Id'] == "All":
     st.write("Positive:", sentiment_score["POSITIVE"])
     st.write("Negative:", sentiment_score["NEGATIVE"])
     st.write("Neutral:", sentiment_score["NEUTRAL"])
-
-else:
-    dialogue_data = get_dialogue_data(movie_choice, character_choice['Id']) # Получение диалоговых данных для выбранного персонажа из файла
-    
-    if len(dialogue_data)==0: # Проверка наличия диалоговых данных для выбранного персонажа
-        st.write(f"No dialogue data found for {character_choice} in {movie_choice}.")
-        
-    else:
-        text_list = list(dialogue_data["Text"])
-    
-        sentiment_score = {"POSITIVE":0, "NEGATIVE":0, "NEUTRAL":0}
-    
-        for text in text_list:
-            sentiment_label=classify_sentiment(text)
-            
-            if sentiment_label=="POSITIVE":
-                sentiment_score["POSITIVE"]+=1
-            elif sentiment_label=="NEGATIVE":
-                sentiment_score["NEGATIVE"]+=1
-            else:
-                sentiment_score["NEUTRAL"]+=1
-                
-        st.write(f"Sentiment analysis for {character_choice} in {movie_choice}")
-        st.write("Positive:",sentiment_score['POSITIVE'])
-        st.write("Negative:",sentiment_score['NEGATIVE'])
-        st.write("Neutral:",sentiment_score['NEUTRAL'])
