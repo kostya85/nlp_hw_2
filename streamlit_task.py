@@ -15,7 +15,6 @@ for index, row in df_heroes_by_movies.iterrows():
     movie_name = row['mName']
     character_name = row['chName_1']
     character_id = row['char_id1']
-    #replicas = eval(row['replicas'].replace('nan,', '').replace('nan', ''))
 
     for character in movies[movie_name]:
         if character['Id'] == character_id:
